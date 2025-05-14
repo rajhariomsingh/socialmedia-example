@@ -340,7 +340,6 @@ const initialChats: ChatType[] = [
     ],
   },
 ];
-const [chats, setChats] = useState<ChatType[]>(initialChats);
 
 const reactionEmojis = ["👍", "❤️", "😂", "😮", "😢", "😠"];
 
