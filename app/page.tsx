@@ -879,8 +879,8 @@ export default function App() {
         className={`fixed top-0 w-full z-10 py-3 backdrop-blur-md transition-all duration-300 ${
           darkMode
             ? scrolled
-              ? "bg-gray-900/30 shadow-md"
-              : "bg-gray-900"
+              ? "bg-gray-800/30 shadow-md"
+              : "bg-gray-800"
             : scrolled
             ? "bg-white/20 shadow-md"
             : "bg-white"
