@@ -237,8 +237,23 @@ const initialPosts: PostType[] = [
     showComments: false,
   },
 ];
+interface MessageType {
+  id: number;
+  sender: number | "me";
+  content: string;
+  time: string;
+  read: boolean;
+  image?: string;
+}
+interface ChatType {
+  id: number;
+  userId: number;
+  messages: MessageType[];
+}
 
-const initialChats = [
+
+
+const initialChats: ChatType[] = [ 
   {
     id: 1,
     userId: 1,
@@ -325,6 +340,7 @@ const initialChats = [
     ],
   },
 ];
+const [chats, setChats] = useState<ChatType[]>(initialChats);
 
 const reactionEmojis = ["👍", "❤️", "😂", "😮", "😢", "😠"];
 
@@ -388,7 +404,7 @@ export default function App() {
     );
   };
 
-  const toggleLike = (postId) => {
+  const toggleLike = (postId: number) => {
     setPosts(
       posts.map((post) => {
         if (post.id === postId) {
@@ -414,7 +430,8 @@ export default function App() {
             ...chat.messages,
             {
               id: chat.messages.length + 1,
-              sender: "me",
+              sender: "me" as "me", // ✅ This is the correct fix
+
               content: newMessage,
               image: newMessageImage || undefined,
               time: new Date().toLocaleTimeString([], {
@@ -566,11 +583,12 @@ export default function App() {
   
 
   const getTotalReactions = (reactions: ReactionType): number => {
-    return Object.values(reactions).reduce(
-      (sum, count) => sum + (count || 0),
-      0
-    );
+    return Object.values(reactions).reduce<number>((sum, count) => {
+      return sum + (typeof count === "number" ? count : 0);
+    }, 0);
   };
+  
+  
 
   const getReactionSummary = (reactions: ReactionType): string => {
     const total = getTotalReactions(reactions);
